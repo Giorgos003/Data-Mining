@@ -35,8 +35,8 @@ class DataProcessor:
 
 
 # Example usage
-input_file = 'DataInTxt'  # Path to the input text file
-output_file = 'data.csv'  # Path to the output CSV file
+#input_file = 'DataInTxt'  # Path to the input text file
+#output_file = 'data.csv'  # Path to the output CSV file
 
-processor = DataProcessor(input_file, output_file)
-processor.process()
+#processor = DataProcessor(input_file, output_file)
+#processor.process()
