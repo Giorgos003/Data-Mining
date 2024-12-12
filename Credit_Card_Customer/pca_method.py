@@ -41,18 +41,3 @@ class PCAProcessor:
             reduced_df.to_csv(output_path, index=False)
 
         return reduced_df
-
-
-# Example usage
-if __name__ == "__main__":
-    # Initialize the PCAProcessor class with 2 components
-    processor = PCAProcessor(n_components=2)
-
-    # Perform PCA
-    result = processor.fit_transform(
-        file_path="preprocessed_data.csv",  # Replace with your file path
-        output_path="pca_reduced_data.csv"  # Optional output file path
-    )
-
-    # Display the result
-    print(result.head())

@@ -32,11 +32,3 @@ class DataProcessor:
         header, data = self.read_data()
         self.save_to_csv(header, data)
         print(f"Data has been successfully saved to {self.output_file}")
-
-
-# Example usage
-#input_file = 'DataInTxt'  # Path to the input text file
-#output_file = 'data.csv'  # Path to the output CSV file
-
-#processor = DataProcessor(input_file, output_file)
-#processor.process()

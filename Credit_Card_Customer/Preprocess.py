@@ -43,6 +43,7 @@ class CreditCardDataProcessor:
         """Saves the processed dataset to a new CSV file."""
         if self.data is not None:
             self.data.to_csv(output_path, index=False)
+            self.data = None
             print(f"Data saved to {output_path}.")
         else:
             print("Data is not loaded. Use load_data() first.")
@@ -50,13 +51,8 @@ class CreditCardDataProcessor:
 
 
 
-processor = CreditCardDataProcessor("data.csv")
-processor.load_data()
-processor.summarize_data()
-processor.normalize_columns(["Avg_Credit_Limit", "Total_Credit_Cards", "Total_visits_bank", "Total_visits_online", "Total_calls_made"])
-processor.fill_missing_values()
-processor.drop_id_columns()
-processor.save_data("preprocessed_data.csv")
+
+
 
 
 
