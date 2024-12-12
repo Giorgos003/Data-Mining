@@ -25,22 +25,6 @@ class CreditCardDataProcessor:
         else:
             print("Data is not loaded. Use load_data() first.")
 
-
-    def detect_outliers(self, column, threshold=1.5):
-        """Detects outliers in a specified column using the IQR method."""
-        if self.data is not None:
-            Q1 = self.data[column].quantile(0.25)
-            Q3 = self.data[column].quantile(0.75)
-            IQR = Q3 - Q1
-            lower_bound = Q1 - threshold * IQR
-            upper_bound = Q3 + threshold * IQR
-            outliers = self.data[(self.data[column] < lower_bound) | (self.data[column] > upper_bound)]
-            print(f"Detected {len(outliers)} outliers in column {column}.")
-            return outliers
-        else:
-            print("Data is not loaded. Use load_data() first.")
-            return None
-
     def fill_missing_values(self):
         """Fills missing values in the dataset with the median of each column."""
         if self.data is not None:
@@ -49,16 +33,11 @@ class CreditCardDataProcessor:
         else:
             print("Data is not loaded. Use load_data() first.")
 
-    def add_outliers(self, column, values):
-        """Adds outlier rows to the dataset for a specific column."""
-        if self.data is not None:
-            for value in values:
-                outlier_row = self.data.iloc[0].copy()
-                outlier_row[column] = value
-                self.data = self.data.append(outlier_row, ignore_index=True)
-            print(f"Added {len(values)} outliers to column {column}.")
-        else:
-            print("Data is not loaded. Use load_data() first.")
+    def drop_id_columns(self):
+        """Drop the specified columns by name or index"""
+        columns_to_drop = ["Sl_No", "Customer Key"] #we want to drop the IDs columns that we don't need
+        self.data = self.data.drop(columns=columns_to_drop)
+
 
     def save_data(self, output_path):
         """Saves the processed dataset to a new CSV file."""
@@ -68,12 +47,48 @@ class CreditCardDataProcessor:
         else:
             print("Data is not loaded. Use load_data() first.")
 
-# Example usage
+
+
+
 processor = CreditCardDataProcessor("data.csv")
 processor.load_data()
 processor.summarize_data()
 processor.normalize_columns(["Avg_Credit_Limit", "Total_Credit_Cards", "Total_visits_bank", "Total_visits_online", "Total_calls_made"])
 processor.fill_missing_values()
-# processor.detect_outliers("Avg_Credit_Limit")
-# processor.add_outliers("Avg_Credit_Limit", [1000000, -5000])
-processor.save_data("processed_data.csv")
+processor.drop_id_columns()
+processor.save_data("preprocessed_data.csv")
+
+
+
+
+
+
+
+
+########################################################################################################################
+#  def detect_outliers(self, column, threshold=1.5):
+#     """Detects outliers in a specified column using the IQR method."""
+#    if self.data is not None:
+#       Q1 = self.data[column].quantile(0.25)
+#      Q3 = self.data[column].quantile(0.75)
+#     IQR = Q3 - Q1
+#    lower_bound = Q1 - threshold * IQR
+#   upper_bound = Q3 + threshold * IQR
+#  outliers = self.data[(self.data[column] < lower_bound) | (self.data[column] > upper_bound)]
+# print(f"Detected {len(outliers)} outliers in column {column}.")
+# return outliers
+# else:
+#   print("Data is not loaded. Use load_data() first.")
+#  return None
+
+
+# def add_outliers(self, column, values):
+#    """Adds outlier rows to the dataset for a specific column."""
+#    if self.data is not None:
+#        for value in values:
+#            outlier_row = self.data.iloc[0].copy()
+#            outlier_row[column] = value
+#            self.data = self.data.append(outlier_row, ignore_index=True)
+#        print(f"Added {len(values)} outliers to column {column}.")
+#    else:
+#        print("Data is not loaded. Use load_data() first.")
