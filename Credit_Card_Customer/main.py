@@ -2,6 +2,7 @@ import readData
 import Preprocess
 import pca_method
 
+
 """
 Αρχικά διαβάζουμε τα δεδομένα από το αρχικό αρχείο txt 
         και τα βάζουμε σε ένα csv αρχείο για ευκολότερη επεξεργασία
@@ -12,6 +13,10 @@ output_file = 'data.csv'  # Path to the output CSV file
 
 reader = readData.DataProcessor(input_file, output_file)
 reader.process()
+
+del reader
+
+
 
 
 """ 
@@ -25,6 +30,9 @@ preprocessor.normalize_columns(["Avg_Credit_Limit", "Total_Credit_Cards", "Total
 preprocessor.fill_missing_values()
 preprocessor.drop_id_columns()
 preprocessor.save_data("preprocessed_data.csv")
+
+del preprocessor
+
 
 
 
@@ -40,5 +48,7 @@ result = pca.fit_transform(
     file_path="preprocessed_data.csv",  # Replace with your file path
     output_path="pca_reduced_data.csv"  # Optional output file path
 )
+
+del result
 
 #ΠΡΟΣΟΧΗ, Η ΜΕΤΑΒΛΗΤΗ result ΕΧΕΙ ΑΠΟΘΗΚΕΥΜΕΝΑ ΤΟ ΚΑΙΝΟΥΡΙΟ DATASET ΜΕΤΑ ΤΗΝ ΕΦΑΡΜΟΓΗ ΤΗΣ PCA
