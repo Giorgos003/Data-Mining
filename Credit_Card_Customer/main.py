@@ -1,5 +1,5 @@
-import readData
-import Preprocess
+import read_data
+import preprocess
 import pca_method
 
 
@@ -11,7 +11,7 @@ import pca_method
 input_file = 'DataInTxt'  # Path to the input text file
 output_file = 'data.csv'  # Path to the output CSV file
 
-reader = readData.DataProcessor(input_file, output_file)
+reader = read_data.DataProcessor(input_file, output_file)
 reader.process()
 
 del reader
@@ -23,7 +23,7 @@ del reader
 Στη συνέχεια κάνουμε μια προ επεξεργασία στα δεδομένα μας μέσω της κλάσης CreditCardDataProcessor 
 """
 
-preprocessor = Preprocess.CreditCardDataProcessor("data.csv")
+preprocessor = preprocess.CreditCardDataProcessor("data.csv")
 preprocessor.load_data()
 preprocessor.summarize_data()
 preprocessor.normalize_columns(["Avg_Credit_Limit", "Total_Credit_Cards", "Total_visits_bank", "Total_visits_online", "Total_calls_made"])

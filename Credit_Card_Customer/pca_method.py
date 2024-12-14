@@ -16,7 +16,7 @@ class PCAProcessor:
         self.n_components = n_components
         self.pca = PCA(n_components=self.n_components)
 
-    def fit_transform(self, file_path, output_path=None):
+    def fit_transform(self, file_path:str, output_path:str=None):
         """
         Perform PCA on the dataset and reduce dimensions.
 
@@ -37,7 +37,7 @@ class PCAProcessor:
         reduced_df = pd.DataFrame(reduced_features, columns=[f'PCA{i + 1}' for i in range(self.n_components)])
 
         # Save the reduced data to a CSV file if output_path is provided
-        if output_path:
+        if output_path is not None:
             reduced_df.to_csv(output_path, index=False)
 
         return reduced_df

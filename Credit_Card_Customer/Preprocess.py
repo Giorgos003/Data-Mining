@@ -1,7 +1,7 @@
 import pandas as pd
 
 class CreditCardDataProcessor:
-    def __init__(self, file_path):
+    def __init__(self, file_path:str):
         self.file_path = file_path
         self.data = None
 
@@ -17,7 +17,7 @@ class CreditCardDataProcessor:
         else:
             print("Data is not loaded. Use load_data() first.")
 
-    def normalize_columns(self, columns):
+    def normalize_columns(self, columns:list[str]):
         """Normalizes the specified columns using z-score scaling."""
         if self.data is not None:
             self.data[columns] = self.data[columns].apply(lambda x: (x - x.mean()) / x.std(), axis=0)
@@ -39,7 +39,7 @@ class CreditCardDataProcessor:
         self.data = self.data.drop(columns=columns_to_drop)
 
 
-    def save_data(self, output_path):
+    def save_data(self, output_path:str):
         """Saves the processed dataset to a new CSV file."""
         if self.data is not None:
             self.data.to_csv(output_path, index=False)

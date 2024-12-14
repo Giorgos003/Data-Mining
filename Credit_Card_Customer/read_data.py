@@ -1,7 +1,7 @@
 import csv
 
 class DataProcessor:
-    def __init__(self, input_file, output_file):
+    def __init__(self, input_file:str, output_file:str):
         self.input_file = input_file
         self.output_file = output_file
 
@@ -18,7 +18,7 @@ class DataProcessor:
 
         return header, data
 
-    def save_to_csv(self, header, data):
+    def save_to_csv(self, header:list[str], data:list[str]):
         # Write the data to a CSV file
         with open(self.output_file, mode='w', newline='') as file:
             writer = csv.writer(file)
