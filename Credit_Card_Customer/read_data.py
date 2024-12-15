@@ -1,4 +1,5 @@
 import csv
+from typing import List
 
 class DataProcessor:
     def __init__(self, input_file:str, output_file:str):
@@ -18,7 +19,7 @@ class DataProcessor:
 
         return header, data
 
-    def save_to_csv(self, header:list[str], data:list[str]):
+    def save_to_csv(self, header: List[str], data: List[str]):
         # Write the data to a CSV file
         with open(self.output_file, mode='w', newline='') as file:
             writer = csv.writer(file)

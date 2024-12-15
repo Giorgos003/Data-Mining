@@ -1,4 +1,5 @@
 import pandas as pd
+from typing import List
 
 class CreditCardDataProcessor:
     def __init__(self, file_path:str):
@@ -17,7 +18,7 @@ class CreditCardDataProcessor:
         else:
             print("Data is not loaded. Use load_data() first.")
 
-    def normalize_columns(self, columns:list[str]):
+    def normalize_columns(self, columns: List[str]):
         """Normalizes the specified columns using z-score scaling."""
         if self.data is not None:
             self.data[columns] = self.data[columns].apply(lambda x: (x - x.mean()) / x.std(), axis=0)

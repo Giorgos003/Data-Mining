@@ -1,6 +1,7 @@
 import read_data
 import preprocess
 import pca_method
+import plot
 
 
 """
@@ -51,4 +52,21 @@ result = pca.fit_transform(
 
 del result
 
-#ΠΡΟΣΟΧΗ, Η ΜΕΤΑΒΛΗΤΗ result ΕΧΕΙ ΑΠΟΘΗΚΕΥΜΕΝΑ ΤΟ ΚΑΙΝΟΥΡΙΟ DATASET ΜΕΤΑ ΤΗΝ ΕΦΑΡΜΟΓΗ ΤΗΣ PCA
+
+
+
+"""
+Εδώ παίρνουμε τα δεδομένα που δημιουργήθηκαν μετά την εφαρμογή του PCA, και τα πλοτάρουμε
+"""
+
+# Initialize the class
+csv_plot = plot.CSV2DPlot('pca_reduced_data.csv', 'PCA1', 'PCA2')  # Replace 'X' and 'Y' with your actual column names
+
+# Load the data
+csv_plot.load_data()
+
+# Plot the data
+csv_plot.plot_data()
+
+del csv_plot
+
