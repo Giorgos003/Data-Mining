@@ -2,7 +2,9 @@ import read_data
 import preprocess
 import pca_method
 import plot
+import add_outliers
 
+##################################################################################################################
 
 """
 Αρχικά διαβάζουμε τα δεδομένα από το αρχικό αρχείο txt 
@@ -18,6 +20,9 @@ reader.process()
 del reader
 
 
+
+
+##################################################################################################################
 
 
 """ 
@@ -36,6 +41,8 @@ del preprocessor
 
 
 
+##################################################################################################################
+
 
 """
 Και εδώ εφαρμόζουμε τη μέθοδο PCA για να ρίξουμε τις διαστάσεις σε 2
@@ -53,6 +60,7 @@ result = pca.fit_transform(
 del result
 
 
+##################################################################################################################
 
 
 """
@@ -69,4 +77,29 @@ csv_plot.load_data()
 csv_plot.plot_data()
 
 del csv_plot
+
+
+
+##################################################################################################################
+
+"""
+Θα δημιουργήσουμε κάποια outliers και θα δημιουργήσουμε ένα νέο άρχείο μαζί με αυτά
+"""
+
+# Initialize the class
+outlier_handler = add_outliers.OutlierHandler('pca_reduced_data.csv', 'PCA1', 'PCA2')
+
+# Load the data
+outlier_handler.load_data()
+
+# Add outliers
+outlier_handler.add_outliers(num_outliers=5, multiplier=4)
+
+# Plot the data with outliers
+outlier_handler.plot_data()
+
+# Save the modified data
+outlier_handler.save_data('output_with_outliers.csv')
+
+
 
