@@ -3,6 +3,7 @@ import preprocess
 import pca_method
 import plot
 import add_outliers
+import hierarchical_clustering
 
 ##################################################################################################################
 
@@ -57,6 +58,10 @@ result = pca.fit_transform(
     output_path="pca_reduced_data.csv"  # Optional output file path
 )
 
+
+info = pca.get_information_conserved()
+print("Information conserved by PCA: {:.2f}%".format(info * 100))
+
 del result
 
 
@@ -101,5 +106,23 @@ outlier_handler.plot_data()
 # Save the modified data
 outlier_handler.save_data('output_with_outliers.csv')
 
+del outlier_handler
+
+# Initialize the class
+hierarchical = hierarchical_clustering.HierarchicalClustering(n_clusters=3, linkage_criterion='average', distance_function='euclidean')
+
+# Load the data
+hierarchical.load_data('output_with_outliers.csv')
+
+# Perform hierarchical clustering
+hierarchical.run_hierarchical_clustering()
+
+# Save the labeled data
+hierarchical.save_data('output_with_clusters.csv')
+
+# Plot the data with cluster labels
+hierarchical.plot_data("PCA1", "PCA2")
+
+del hierarchical
 
 

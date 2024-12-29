@@ -41,3 +41,9 @@ class PCAProcessor:
             reduced_df.to_csv(output_path, index=False)
 
         return reduced_df
+    
+    def get_information_conserved(self):
+        """
+        Print the information conserved by the PCA.
+        """
+        return sum(self.pca.explained_variance_ratio_)
