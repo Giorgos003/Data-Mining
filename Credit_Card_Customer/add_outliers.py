@@ -18,7 +18,10 @@ class OutlierHandler:
         self.data = None
 
     def load_data(self):
-        """Load the CSV file into a DataFrame."""
+        """
+        Load the data from the CSV file.
+        :return: None
+        """
         try:
             self.data = pd.read_csv(self.file_path)
             if self.x_column not in self.data.columns or self.y_column not in self.data.columns:
@@ -33,6 +36,7 @@ class OutlierHandler:
 
         :param num_outliers: Number of outliers to add.
         :param multiplier: Multiplier to determine the range of outliers.
+        :return: None
         """
         if self.data is None:
             print("Data not loaded. Please run `load_data()` first.")
@@ -50,7 +54,10 @@ class OutlierHandler:
         self.data = pd.concat([self.data, outliers], ignore_index=True)
 
     def plot_data(self):
-        """Plot the data including outliers."""
+        """
+        Plot the data including outliers.
+        :return: nothing
+        """
         if self.data is None:
             print("Data not loaded. Please run `load_data()` first.")
             return
@@ -64,7 +71,11 @@ class OutlierHandler:
         plt.show()
 
     def save_data(self, output_path):
-        """Save the dataset (with outliers) to a new CSV file."""
+        """
+        Save the dataset (with outliers) to a new CSV file.
+        :param output_path: the file that the new data should be saved to.
+        :return: nothing
+        """
         if self.data is not None:
             self.data.to_csv(output_path, index=False)
             print(f"Data saved to {output_path}")
