@@ -1,23 +1,21 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-#import a hierarchical clustering algorithm
-from sklearn.cluster import AgglomerativeClustering
+
+from scipy.cluster.hierarchy import linkage, fcluster
+from sklearn.metrics import silhouette_score
 
 class HierarchicalClustering:
-    def __init__(self, n_clusters=3,linkage_criterion='average',distance_function='euclidean'):
+    def __init__(self,linkage_criterion='average',distance_function='euclidean'):
         """
         Initialize the ClusteringProcessor class.
 
         Parameters:
-        n_clusters (int): Number of clusters to form.
         linkage_criterion (str): The linkage criterion to use.
         distance_function (str): The distance function to use.
         """
-        self.n_clusters = n_clusters
         self.linkage_criterion = linkage_criterion
         self.distance_function = distance_function
-        self.model = AgglomerativeClustering(n_clusters=self.n_clusters,linkage=self.linkage_criterion,metric=self.distance_function)
 
     def load_data(self, file_path:str):
         """
@@ -30,20 +28,48 @@ class HierarchicalClustering:
         print(f"Data loaded successfully from {file_path}")
 
 
-    def run_hierarchical_clustering(self):
+    def run_hierarchical_clustering(self,max_clusters=10):
         """
         Perform clustering on the dataset and get the labeled data.
         """
         if self.data is None:
             print("Data not loaded. Please run `load_data()` first.")
             return
-        # Apply clustering and store the labels
-        labels = self.model.fit_predict(self.data)
+        
+        linkage_matrix = linkage(self.data, method=self.linkage_criterion, metric=self.distance_function)
+        self.linkage_matrix = linkage_matrix
 
-        # Add the labels to the dataset
-        self.data['Cluster'] = labels
+    
+    def find_optimal_clusters(self, max_clusters=10):
+        """
+        Find the optimal number of clusters using the silhouette score.
 
-        return self.data
+        Parameters:
+        max_clusters (int): The maximum number of clusters to consider.
+
+        Returns:
+        int: The optimal number of clusters.
+        """
+        if self.data is None:
+            print("Data not loaded. Please run `load_data()` first.")
+            return
+
+        best_score = -1
+        best_clusters = 2
+        best_labels = None
+
+        for n_clusters in range(2, max_clusters+1):
+            labels = fcluster(self.linkage_matrix, n_clusters, criterion='maxclust')
+            score = silhouette_score(self.data, labels)
+            print(f"Clusters: {n_clusters}, Silhouette Score: {score}")
+
+            if score > best_score:
+                best_score = score
+                best_clusters = n_clusters
+                best_labels = labels
+
+        self.data['Cluster'] = best_labels
+        return best_clusters
     
     def save_data(self, output_path):
         """Save the dataset with labesl to a CSV file."""

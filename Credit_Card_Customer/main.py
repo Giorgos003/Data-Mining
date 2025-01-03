@@ -109,13 +109,18 @@ outlier_handler.save_data('output_with_outliers.csv')
 del outlier_handler
 
 # Initialize the class
-hierarchical = hierarchical_clustering.HierarchicalClustering(n_clusters=3, linkage_criterion='average', distance_function='euclidean')
+hierarchical = hierarchical_clustering.HierarchicalClustering(linkage_criterion='average', distance_function='euclidean')
 
 # Load the data
 hierarchical.load_data('output_with_outliers.csv')
 
 # Perform hierarchical clustering
 hierarchical.run_hierarchical_clustering()
+
+# Find the optimal number of clusters
+"""Αυτό θα χρησιμοποιήσουμε για τον αριθμό των clusters στον k-means"""
+optimal_clusters = hierarchical.find_optimal_clusters(max_clusters=10)
+print(f"Optimal number of clusters: {optimal_clusters}")
 
 # Save the labeled data
 hierarchical.save_data('output_with_clusters.csv')
