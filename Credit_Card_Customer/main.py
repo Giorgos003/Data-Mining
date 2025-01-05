@@ -143,7 +143,7 @@ del outlier_handler
 """
 
 # Initialize the class
-hierarchical = hierarchical_clustering.HierarchicalClustering(linkage_criterion='average', distance_function='euclidean')
+hierarchical = hierarchical_clustering.HierarchicalClustering(linkage_criterion='ward')
 
 # Load the data
 hierarchical.load_data('output_with_outliers.csv')

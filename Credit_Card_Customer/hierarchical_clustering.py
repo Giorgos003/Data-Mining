@@ -14,7 +14,7 @@ from scipy.cluster.hierarchy import linkage, fcluster
 from sklearn.metrics import silhouette_score
 
 class HierarchicalClustering:
-    def __init__(self,linkage_criterion='average',distance_function='euclidean'):
+    def __init__(self,linkage_criterion='average'):
         """
         Initialize the ClusteringProcessor class.
 
@@ -23,7 +23,6 @@ class HierarchicalClustering:
         distance_function (str): The distance function to use.
         """
         self.linkage_criterion = linkage_criterion
-        self.distance_function = distance_function
 
     def load_data(self, file_path:str):
         """
@@ -36,7 +35,7 @@ class HierarchicalClustering:
         #print(f"Data loaded successfully from {file_path}")
 
 
-    def run_hierarchical_clustering(self,max_clusters=10):
+    def run_hierarchical_clustering(self):
         """
         Perform clustering on the dataset and get the labeled data.
         """
@@ -44,7 +43,7 @@ class HierarchicalClustering:
             print("Data not loaded. Please run `load_data()` first.")
             return
         
-        linkage_matrix = linkage(self.data, method=self.linkage_criterion, metric=self.distance_function)
+        linkage_matrix = linkage(self.data, method=self.linkage_criterion, metric='euclidean')
         self.linkage_matrix = linkage_matrix
 
     
@@ -69,13 +68,14 @@ class HierarchicalClustering:
         for n_clusters in range(2, max_clusters+1):
             labels = fcluster(self.linkage_matrix, n_clusters, criterion='maxclust')
             score = silhouette_score(self.data, labels)
-            print(f"Clusters: {n_clusters}, Silhouette Score: {score}")
+            
 
             if score > best_score:
                 best_score = score
                 best_clusters = n_clusters
                 best_labels = labels
 
+        print("Silhouette Score:", best_score)
         self.data['Cluster'] = best_labels
         return best_clusters
     
