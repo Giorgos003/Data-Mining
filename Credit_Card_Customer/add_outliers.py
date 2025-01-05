@@ -1,3 +1,11 @@
+"""
+This class add outliers to the PCA reduced data. More specifically:
+    Loads the data from the 'pca_reduced_data.csv',
+    Adds the outliers,
+    Plots the new data
+    Saves them to a new file ('output_with_outliers.csv' as you can see in 'main.py')
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -6,8 +14,7 @@ import matplotlib.pyplot as plt
 class OutlierHandler:
     def __init__(self, file_path, x_column, y_column):
         """
-        Initialize the class with the file path and column names.
-
+        Constructor
         :param file_path: Path to the CSV file.
         :param x_column: Name of the column to use as X-axis.
         :param y_column: Name of the column to use as Y-axis.
@@ -30,9 +37,15 @@ class OutlierHandler:
             print(f"Error loading file: {e}")
             self.data = None
 
-    def add_outliers(self, num_outliers=5, multiplier=3):
+    def add_outliers(self, num_outliers: int, multiplier: int):
         """
         Add synthetic outliers to the dataset.
+
+        This method introduces synthetic outliers by selecting points that are significantly distant from the main body of the data.
+
+        The outliers are generated based on the mean and standard deviation of the existing data, and the distance from the
+        mean is controlled by a specified multiplier. This allows for the creation of outliers that are far outside the
+        typical data range.
 
         :param num_outliers: Number of outliers to add.
         :param multiplier: Multiplier to determine the range of outliers.
@@ -70,7 +83,7 @@ class OutlierHandler:
         plt.grid(True)
         plt.show()
 
-    def save_data(self, output_path):
+    def save_data(self, output_path: str):
         """
         Save the dataset (with outliers) to a new CSV file.
         :param output_path: the file that the new data should be saved to.

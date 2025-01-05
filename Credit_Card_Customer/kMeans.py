@@ -1,6 +1,15 @@
+"""
+This class implements the k-means algorithm to the Credit Card Customer data with the added outliers.
+
+It takes the 'k' as input from the hierarchical algorithm that was implemented in the 'hierarchical_clustering.py' file.
+In the end, it plots the data with each cluster having a different colour.
+"""
+
 import csv
 import random
 import math
+from typing import List
+
 from matplotlib import pyplot as plt
 
 
@@ -11,16 +20,18 @@ def euclidean_distance(point1, point2):
     :param point2: a 2-D point
     :return: the Euclidean distance between point1 and point2
     """
+
     return math.sqrt((point1[0] - point2[0]) ** 2 + (point1[1] - point2[1]) ** 2)
 
 
 class KMeans:
-    def __init__(self, k, file_path):
+    def __init__(self, k: int, file_path: str):
         """
         Constructor
         :param k: the variable k that contains the number of clusters
         :param file_path: the file path that contains the data where we will run the k-means algorithm
         """
+
         self.k = k
         self.file_path = file_path
         self.data = []
@@ -32,6 +43,7 @@ class KMeans:
         Loads data from csv file
         :return: nothing
         """
+
         with open(self.file_path, 'r') as file:
             reader = csv.reader(file)
             next(reader)
@@ -43,6 +55,7 @@ class KMeans:
         Randomly initialises centroids
         :return: nothing
         """
+
         self.centroids = random.sample(self.data, self.k)
 
     def assign_clusters(self):
@@ -50,6 +63,7 @@ class KMeans:
         Assign each point to the nearest centroid
         :return: nothing
         """
+
         self.clusters = [[] for _ in range(self.k)]
         for point in self.data:
             distances = [euclidean_distance(point, centroid) for centroid in self.centroids]
@@ -61,24 +75,27 @@ class KMeans:
         Updates centroids to the mean of their clusters
         :return: nothing
         """
+
         for i, cluster in enumerate(self.clusters):
             if cluster:
                 x_coords = [point[0] for point in cluster]
                 y_coords = [point[1] for point in cluster]
                 self.centroids[i] = [sum(x_coords) / len(x_coords), sum(y_coords) / len(y_coords)]
 
-    def has_converged(self, old_centroids):
+    def has_converged(self, old_centroids: List[float]):
         """
         Checks if the algorithm has converged. This means that the old centroids are not updated.
         :return: boolean value indicating if the algorithm has converged or not
         """
+
         return old_centroids == self.centroids
 
-    def run(self, max_iterations):
+    def run(self, max_iterations: int):
         """
         Runs the k-means algorithm
         :return: nothing
         """
+
         self.load_data()
         self.initialise_centroids()
 
@@ -95,6 +112,7 @@ class KMeans:
         Plots the data points and centroids, coloring each cluster differently.
         :return: nothing
         """
+
         colors = plt.colormaps["tab10"]  # Updated to use the newer colormaps API
         for i, cluster in enumerate(self.clusters):
             x_coords = [point[0] for point in cluster]
@@ -111,7 +129,3 @@ class KMeans:
         plt.ylabel("Y-axis")
         plt.legend()
         plt.show()
-
-a = KMeans(k=3, file_path="output_with_outliers.csv")
-a.run(100)
-a.plot_results()

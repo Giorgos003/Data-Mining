@@ -1,32 +1,33 @@
-# This class takes as input the preprocessed data and reduces the dimensions from 5 to 2
-# The first two columns, that are IDs, are removed from the start
+"""
+This class takes as input the preprocessed data from the 'preprocessed_data.csv' file  and reduces the dimensions from 5 to 2.
+The first two columns, that are IDs, are removed from the start (check the 'preprocessed.py' file).
+It saves the dimensional reduced data to a new file 'pca_reduced_data.csv'
+
+It is also the calculates the percentage of the information that it is conserved after the dimensionality reduction. It prints this value
+"""
 
 import pandas as pd
 from sklearn.decomposition import PCA
 
 
 class PCAProcessor:
-    def __init__(self, n_components=2):
+    def __init__(self, n_components: int):
         """
-        Initialize the PCAProcessor class.
+        Constructor
+        :param n_components: integer that contains the number of principal components to retain.
+        """
 
-        Parameters:
-        n_components (int): Number of principal components to retain.
-        """
         self.n_components = n_components
         self.pca = PCA(n_components=self.n_components)
 
-    def fit_transform(self, file_path:str, output_path:str=None):
+    def fit_transform(self, file_path: str, output_path: str):
         """
-        Perform PCA on the dataset and reduce dimensions.
-
-        Parameters:
-        file_path (str): Path to the input CSV file.
-        output_path (str, optional): Path to save the reduced dataset as a CSV file.
-
-        Returns:
-        pd.DataFrame: DataFrame containing reduced dimensions.
+        Performs PCA on the dataset and reduce dimensions.
+        :param file_path: string that contains the path to the input CSV file.
+        :param output_path: string that contains the path to save the reduced dataset as a CSV file.
+        :return: the DataFrame containing reduced dimensions.
         """
+
         # Load the dataset
         data = pd.read_csv(file_path)
 
@@ -44,6 +45,7 @@ class PCAProcessor:
     
     def get_information_conserved(self):
         """
-        Print the information conserved by the PCA.
+        Calculates the proportion of variance explained by the selected principal components in PCA.
+        :return: that number
         """
         return sum(self.pca.explained_variance_ratio_)

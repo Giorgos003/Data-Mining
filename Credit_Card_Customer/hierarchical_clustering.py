@@ -99,7 +99,7 @@ class HierarchicalClustering:
             cluster_data = self.data[self.data['Cluster'] == cluster]
             plt.scatter(cluster_data[self.x_column], cluster_data[self.y_column], label=f"Cluster {cluster}", alpha=0.7)
 
-        plt.title('2D Scatter Plot with Clusters')
+        plt.title('2D Scatter Plot with the clusters suggested by the hierarchical algorithm')
         plt.xlabel(self.x_column)
         plt.ylabel(self.y_column)
         plt.legend()

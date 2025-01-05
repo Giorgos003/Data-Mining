@@ -1,3 +1,8 @@
+"""
+This class plots the data after tha dimensionality reduction.
+It loads the data from the 'pca_reduced_data' and plots them
+"""
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -5,7 +10,7 @@ import matplotlib.pyplot as plt
 class CSV2DPlot:
     def __init__(self, file_path, x_column, y_column):
         """
-        Initialize the class with the file path and column names for x and y axes.
+        Constructor
 
         :param file_path: Path to the CSV file.
         :param x_column: Name of the column to use as X-axis.
@@ -17,7 +22,10 @@ class CSV2DPlot:
         self.data = None
 
     def load_data(self):
-        """Load the CSV file into a DataFrame."""
+        """
+        Load the CSV file into a DataFrame.
+        :return: nothing
+        """
         try:
             self.data = pd.read_csv(self.file_path)
             if self.x_column not in self.data.columns or self.y_column not in self.data.columns:
@@ -27,7 +35,10 @@ class CSV2DPlot:
             self.data = None
 
     def plot_data(self):
-        """Plot the data as a 2D scatter plot."""
+        """
+        Plot the data as a 2D scatter plot.
+        :return: nothing
+        """
         if self.data is None:
             print("Data not loaded. Please run `load_data()` first.")
             return
