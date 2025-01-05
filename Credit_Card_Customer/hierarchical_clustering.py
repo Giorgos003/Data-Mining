@@ -1,3 +1,11 @@
+"""
+This class implements the Hierarchical Clustering algorithm.
+
+It takes a linkage criterion and a distance function as input and performs clustering on the dataset.
+It also provides a method to find the optimal number of clusters using the silhouette score.
+In the end, it plots the data with each cluster having a different colour.
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
