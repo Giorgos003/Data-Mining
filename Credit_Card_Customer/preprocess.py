@@ -91,6 +91,6 @@ class CreditCardDataPreProcessor:
 
         if self.data is not None:
             self.data.to_csv(output_path, index=False)
-            print(f"Data saved to {output_path}.")
+            #print(f"Data saved to {output_path}.")
         else:
             print("Data is not loaded. Use load_data() first.")

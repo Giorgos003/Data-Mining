@@ -91,7 +91,7 @@ class OutlierHandler:
         """
         if self.data is not None:
             self.data.to_csv(output_path, index=False)
-            print(f"Data saved to {output_path}")
+            #print(f"Data saved to {output_path}")
         else:
             print("Data not available. Please load the data and add outliers first.")
 

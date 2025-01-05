@@ -25,7 +25,7 @@ class HierarchicalClustering:
         file_path (str): Path to the input CSV file.
         """
         self.data = pd.read_csv(file_path)
-        print(f"Data loaded successfully from {file_path}")
+        #print(f"Data loaded successfully from {file_path}")
 
 
     def run_hierarchical_clustering(self,max_clusters=10):
